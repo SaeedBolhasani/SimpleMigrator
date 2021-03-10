@@ -1,0 +1,1 @@
+﻿DbMigrator.exe 4.5.5 "User ID=sa;Password=23456;Initial Catalog=Saeed;Data Source=localhost"
