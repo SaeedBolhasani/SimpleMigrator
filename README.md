@@ -1,2 +1,0 @@
-# SimpleMigrator
-Simple Migrator

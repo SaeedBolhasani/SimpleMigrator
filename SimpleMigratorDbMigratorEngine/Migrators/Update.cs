@@ -1,4 +1,6 @@
-﻿namespace DornaDbMigrator.Migrators
+﻿using SimpleMigrator.DbMigratorEngine.Commands;
+
+namespace SimpleMigrator.DbMigratorEngine.Migrators
 {
     public class Update
     {
@@ -16,8 +18,8 @@
 
         public Table Where(string condition)
         {
-            this.table.AddCommand(new UpdateCommand("dbo", this.table.Name, this.column, this.value, condition));
-            return this.table;
+            table.AddCommand(new UpdateCommand("dbo", table.Name, column, value, condition));
+            return table;
         }
     }
 }
