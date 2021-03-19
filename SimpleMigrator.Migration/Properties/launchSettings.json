@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "SimpleMigrator.Migration": {
+      "commandName": "Project",
+      "commandLineArgs": " -c \"Server=localhost;Database=saeed;User Id=sa ;Password=12345;\" -v false -a afsf"
+    }
+  }
+}

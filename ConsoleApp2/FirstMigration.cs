@@ -1,9 +1,10 @@
 ﻿using SimpleMigrator.DbMigratorEngine;
 using SimpleMigrator.DbMigratorEngine.Migrators;
+using System;
 using System.Data;
 using System.Linq;
 
-namespace SimpleMigratorDbMigrator
+namespace ConsoleApp2
 {
     [MigrationMetadata("1.0.0.0", "13960000")]
     public class FirstMigration : DbMigratorBase
@@ -38,23 +39,26 @@ namespace SimpleMigratorDbMigrator
         {
             //this.ExecuteRawSql("EXEC sp_RENAME '[dbo].[BusinessLog].[Service]' , 'Module', 'COLUMN'", null);
             this.Table("Sec_User")
+                .Create(i => i.AddColumn("id", SqlDbType.BigInt, identity: new SimpleMigrator.DbMigratorEngine.Models.Identity(1, 1), allowNull: false))
                 .Alter(i =>
                 {
                     i.AddColumnIfNoExist("LastPasswordChangeDateTime", SqlDbType.DateTime)
-                     .AddColumnIfNoExist("Lock", SqlDbType.Bit, defaultValue: 0, constraint: "DF_Sec_User_Lock")
-                     .AddColumnIfNoExist("InActive", SqlDbType.Bit, defaultValue: 0, constraint: "DF_Sec_User_InActive")
+                     //.AddColumnIfNoExist("Lock", SqlDbType.Bit, defaultValue: 0, constraint: "DF_Sec_User_Lock")
+                     //.AddColumnIfNoExist("InActive", SqlDbType.Bit, defaultValue: 0, constraint: "DF_Sec_User_InActive")
                      .AddColumnIfNoExist("PasswordFailCount", SqlDbType.Int)
                      .AddColumnIfNoExist("LastLoginDateTime", SqlDbType.DateTime)
                      .AddColumnIfNoExist("LoginDateTime", SqlDbType.DateTime);
+
                 })
-                .Update("LastPasswordChangeDateTime", "GETDATE()").Where("[LastPasswordChangeDateTime] is null")
-                .Update("Lock", 0).Where("[Lock] is null")
-                .Update("InActive", 0).Where("[InActive] is null")
+                .Update("LastPasswordChangeDateTime", $"'{DateTime.Now}'").Where("[LastPasswordChangeDateTime] is null")
+                //.Update("Lock", 0).Where("[Lock] is null")
+                //.Update("InActive", 0).Where("[InActive] is null")
                 .Update("PasswordFailCount", 0).Where("[PasswordFailCount] is null");
 
-            this.Table("Rep_ReportTree")
-                .Alter().AddColumnIfNoExist("DeleteTime", SqlDbType.DateTime)
-                .Alter().AddColumnIfNoExist("Code", "nvarchar(200)");
+            //this.Table("Rep_ReportTree")
+            //    .Alter().AddColumnIfNoExist("DeleteTime", SqlDbType.DateTime)
+            //    .Alter().AddColumnIfNoExist("Code", "nvarchar(200)");
+
 
         }
     }

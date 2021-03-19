@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using SimpleMigrator.DbMigratorEngine;
 using SimpleMigrator.DbMigratorEngine.Commands;
 using SimpleMigrator.DbMigratorEngine.Migrations;
 using SimpleMigrator.DbMigratorEngine.Migrators;
@@ -7,25 +8,26 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
 
-namespace SimpleMigrator.DbMigratorEngine
+namespace SimpleMigrator.Migration
 {
     public class MigrationRunner
     {
-        public void Run(string connectionString, Assembly assembly, string version = null)
+        public void Run(string connectionString, Assembly[] assemblies, string version = null)
         {
-            var migratorTypes = assembly.GetExportedTypes()
+            var migratorTypes = assemblies.SelectMany(i => i.GetExportedTypes())
                .Where(i => typeof(DbMigratorBase).IsAssignableFrom(i) && !i.IsAbstract)
-               .Where(i => i.GetCustomAttribute<MigrationMetadataAttribute>() != null);
+               .Where(i => i.GetCustomAttribute<MigrationMetadataAttribute>() != null).ToArray();
 
             if (version != null)
-                migratorTypes = migratorTypes.Where(i => i.GetCustomAttribute<MigrationMetadataAttribute>().SimpleMigratorVersion.CompareTo(version) < 1);
+                migratorTypes = migratorTypes.Where(i => i.GetCustomAttribute<MigrationMetadataAttribute>().SimpleMigratorVersion.CompareTo(version) < 1).ToArray();
 
             var migrators = migratorTypes.OrderBy(i => i.GetCustomAttribute<MigrationMetadataAttribute>().SimpleMigratorVersion)
                .Select(i => Activator.CreateInstance(i))
                .Cast<DbMigratorBase>()
                .ToArray();
 
-            if (migrators.Length == 0) return;
+            if (migrators.Length == 0)
+                return;
 
             using (var connection = new SqlConnection(connectionString))
             {
@@ -86,7 +88,7 @@ namespace SimpleMigrator.DbMigratorEngine
         {
             var insertCommand = new InsertCommand("dbo", "MigrationsHistory", new[] { "Version", "Date" }, new[] { version, date });
             insertCommand.Execute(executionContext);
-            
+
         }
 
         private MigrationHistory GetLatestMigrationHistory(ExecutionContext executionContext)
