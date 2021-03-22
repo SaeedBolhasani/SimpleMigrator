@@ -1,12 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
+    <LangVersion>9.0</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SimpleMigratorDbMigratorEngine\SimpleMigrator.DbMigratorEngine.csproj" />
+    <ProjectReference Include="..\SimpleCode.Migrator\SimpleCode.Migrator.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,7 @@
 ﻿using McMaster.NETCore.Plugins;
 using SimpleMigrator.DbMigratorEngine;
 using SimpleMigrator.DbMigratorEngine.Migrators;
+using SimpleMigrator.Migration;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,7 +9,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
 
-namespace SimpleMigrator.Migration
+namespace SimpleCode.Migrator.Cli
 {
     internal class Program
     {
@@ -22,12 +23,13 @@ namespace SimpleMigrator.Migration
                 var config = Run(args);
 
                 var asl = new AssemblyLoadContext("s");
-                var asm = asl.LoadFromAssemblyPath(@"D:\Projects\DornaDbMigrator\SimpleMigrator\ConsoleApp1\bin\Debug\netcoreapp3.1\ConsoleApp1.dll");
+                //var asm = asl.LoadFromAssemblyPath(@"D:\Projects\DornaDbMigrator\SimpleMigrator\ConsoleApp1\bin\Debug\netcoreapp3.1\ConsoleApp1.dll");
 
-                var path = @"D:\Projects\DornaDbMigrator\SimpleMigrator\ConsoleApp1\bin\Debug\netcoreapp3.1\";
+                var path = @"D:\Projects\DornaDbMigrator\SimpleMigrator\ConsoleApp1\bin\Debug\netcoreapp3.1";
+                //var a = Assembly.LoadFrom(path);
 
                 var loaders = new List<PluginLoader>();
-                foreach(var file in Directory.GetFiles(path, "*.dll"))
+                foreach (var file in Directory.GetFiles(path, "*.dll"))
                 {
                     var loader = PluginLoader.CreateFromAssemblyFile(file, new[] { typeof(DbMigratorBase) });
                     loaders.Add(loader);
@@ -36,11 +38,12 @@ namespace SimpleMigrator.Migration
 
                 var aa = loaders.Select(i => i.LoadDefaultAssembly()).SelectMany(i => i.GetTypes()).ToArray();
 
-
+                AppDomain.CreateDomain("");
                 var runner = new MigrationRunner();
                 runner.Run("", loaders.Select(i => i.LoadDefaultAssembly()).ToArray(), null);
 
-                var type = asm.GetExportedTypes();
+
+                //var type = asm.GetExportedTypes();
             }
             catch (Exception e)
             {
@@ -83,7 +86,6 @@ namespace SimpleMigrator.Migration
                 .Select(i => Activator.CreateInstance(i))
                 .Cast<ICommand>()
                 .ToArray();
-
             var configuration = new MigratorConfiguration();
             while (tokenManager.HasToken())
             {
