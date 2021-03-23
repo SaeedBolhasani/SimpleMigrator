@@ -2,7 +2,8 @@
   "profiles": {
     "SimpleMigrator.Migration": {
       "commandName": "Project",
-      "commandLineArgs": " -c \"Server=localhost;Database=saeed;User Id=sa ;Password=12345;\" -v false -a afsf"
+      //"commandLineArgs": "-h"
+      "commandLineArgs": " --connection-string \"Server=localhost;Database=saeed;User Id=sa ;Password=12345;\" -d D:\\Projects\\SimpleMigrator\\tests\\ConsoleApp1\\bin\\Debug\\net5.0\\"
     }
   }
 }

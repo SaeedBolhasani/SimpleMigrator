@@ -5,6 +5,10 @@
         public bool CaseSensitive { get; }
         public string ShortOption { get; }
         public string Option { get; }
+
+
+        public string Help { get; }
+
         public void Execute(MigratorConfiguration migratorConfiguration, TokenManager tokenManager);
     }
 }

@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SimpleCode.Migrator\SimpleCode.Migrator.csproj" />
+    <ProjectReference Include="..\..\SimpleCode.Migrator\SimpleCode.Migrator.csproj" />
   </ItemGroup>
 
 </Project>

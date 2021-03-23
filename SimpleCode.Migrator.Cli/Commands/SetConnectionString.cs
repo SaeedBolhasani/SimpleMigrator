@@ -4,9 +4,11 @@ namespace SimpleMigrator.Migration
 {
     public class SetConnectionString : ICommand
     {
-        public string ShortOption { get; } = "C";
-        public string Option { get; } = "ConnectionString";
+        public string ShortOption { get; } = "c";
+        public string Option { get; } = "connection-string";
         public bool CaseSensitive { get; } = false;
+        public string Help { get; } = "Use to set connection string.";
+
         public void Execute(MigratorConfiguration migratorConfiguration, TokenManager tokenManager)
         {
             if (!tokenManager.HasToken())

@@ -2,9 +2,12 @@
 {
     public class SetVerbose : ICommand
     {
-        public string ShortOption { get; } = "V";
-        public string Option { get; } = "Verbose";
+        public string ShortOption { get; } = "v";
+        public string Option { get; } = "verbose";
         public bool CaseSensitive { get; } = false;
+
+        public string Help { get; } = "If leave it empty or set true show progress verbosely.";
+
         public void Execute(MigratorConfiguration migratorConfiguration, TokenManager tokenManager)
         {
 

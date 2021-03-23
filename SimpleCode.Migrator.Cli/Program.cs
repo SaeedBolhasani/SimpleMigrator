@@ -1,4 +1,6 @@
 ﻿using McMaster.NETCore.Plugins;
+using Microsoft.Extensions.DependencyInjection;
+using SimpleCode.Migrator.Cli.Commands;
 using SimpleMigrator.DbMigratorEngine;
 using SimpleMigrator.DbMigratorEngine.Migrators;
 using SimpleMigrator.Migration;
@@ -15,77 +17,48 @@ namespace SimpleCode.Migrator.Cli
     {
         private static void Main(string[] args)
         {
-
-            Console.WriteLine(string.Join(',', args));
-
             try
             {
+                if (args == null || args.Length == 0)
+                    args = new[] { "-h" };
+
                 var config = Run(args);
+                if (config.AssemblyPath == null && config.Directory == null)
+                    throw new Exception($"Both assembly path and directory can not be empty together.");
 
-                var asl = new AssemblyLoadContext("s");
-                //var asm = asl.LoadFromAssemblyPath(@"D:\Projects\DornaDbMigrator\SimpleMigrator\ConsoleApp1\bin\Debug\netcoreapp3.1\ConsoleApp1.dll");
+                var files = new List<string>();
 
-                var path = @"D:\Projects\DornaDbMigrator\SimpleMigrator\ConsoleApp1\bin\Debug\netcoreapp3.1";
-                //var a = Assembly.LoadFrom(path);
+                if (config.AssemblyPath != null)
+                    files.Add(config.AssemblyPath);
+
+                if (config.Directory != null)
+                    files.AddRange(Directory.GetFiles(config.Directory, "*.dll"));
 
                 var loaders = new List<PluginLoader>();
-                foreach (var file in Directory.GetFiles(path, "*.dll"))
+                foreach (var file in files)
                 {
                     var loader = PluginLoader.CreateFromAssemblyFile(file, new[] { typeof(DbMigratorBase) });
                     loaders.Add(loader);
-
                 }
 
-                var aa = loaders.Select(i => i.LoadDefaultAssembly()).SelectMany(i => i.GetTypes()).ToArray();
-
-                AppDomain.CreateDomain("");
                 var runner = new MigrationRunner();
-                runner.Run("", loaders.Select(i => i.LoadDefaultAssembly()).ToArray(), null);
 
-
-                //var type = asm.GetExportedTypes();
+                runner.Run(config.ConnectionString, loaders.Select(i => i.LoadDefaultAssembly()).ToArray(), null);
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.ToString());
+                Console.WriteLine(e.Message);
             }
-
-
-            // Create the second AppDomain.
-
-
-
-            //if (args == null || args.Length != 2)
-            //    throw new Exception();
-            //var version = args[0];
-            //var conncetionString = args[2];
-
         }
-        //public class AssemblyLoader : AssemblyLoadContext
-        //{
-        //    Not exactly sure about this
-        //    protected override Assembly Load(AssemblyName assemblyName)
-        //    {
-        //        var deps = DependencyContext.Default;
-        //        var res = deps.CompileLibraries.Where(d => d.Name.Contains(assemblyName.Name)).ToList();
-        //        var assembly = Assembly.Load(new Asse));
-        //        return assembly;
-        //    }
-        //}
+
         private static MigratorConfiguration Run(string[] args)
         {
             var tokenizer = new Tokenizer();
-
             var tokens = tokenizer.Tokenize(args);
-
             var tokenManager = new TokenManager(tokens);
 
-            var commands = Assembly.GetExecutingAssembly()
-                .GetExportedTypes()
-                .Where(i => typeof(ICommand).IsAssignableFrom(i) && !i.IsInterface)
-                .Select(i => Activator.CreateInstance(i))
-                .Cast<ICommand>()
-                .ToArray();
+            IEnumerable<ICommand> commands = GetAllCommands();
+
             var configuration = new MigratorConfiguration();
             while (tokenManager.HasToken())
             {
@@ -96,6 +69,8 @@ namespace SimpleCode.Migrator.Cli
                     throw new ArgumentException($"Invalid switch {currentToken.RawValue}");
 
                 var command = commands.FirstOrDefault(i => string.Equals(i.ShortOption, (string)currentToken.Value, i.CaseSensitive ? StringComparison.InvariantCulture : StringComparison.InvariantCultureIgnoreCase));
+                if (command == null)
+                    command = commands.FirstOrDefault(i => string.Equals(i.Option, (string)currentToken.Value, i.CaseSensitive ? StringComparison.InvariantCulture : StringComparison.InvariantCultureIgnoreCase));
 
                 if (command == null)
                     throw new ArgumentException($"Unkown switch {currentToken.RawValue}");
@@ -105,6 +80,27 @@ namespace SimpleCode.Migrator.Cli
             return configuration;
         }
 
+        private static IEnumerable<ICommand> GetAllCommands()
+        {
+            var serviceCollection = new ServiceCollection();
 
+            var commandTypes = Assembly.GetExecutingAssembly()
+                .GetExportedTypes()
+                .Where(i => typeof(ICommand).IsAssignableFrom(i) && !i.IsInterface && i != typeof(HelpCommand))
+                .ToArray();
+
+            foreach (var commandType in commandTypes)
+            {
+                serviceCollection.AddSingleton(typeof(ICommand), commandType);
+            }
+
+            serviceCollection.AddSingleton<HelpCommand>();
+
+            var serviceProvider = serviceCollection.BuildServiceProvider();
+            var helpCommand = serviceProvider.GetService<HelpCommand>() as ICommand;
+
+            var commands = serviceProvider.GetServices<ICommand>().Concat(new[] { helpCommand });
+            return commands;
+        }
     }
 }
