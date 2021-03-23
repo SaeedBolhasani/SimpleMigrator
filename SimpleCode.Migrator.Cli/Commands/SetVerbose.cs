@@ -1,4 +1,7 @@
-﻿namespace SimpleMigrator.Migration
+﻿using SimpleCode.Migrator.Cli.Interfaces;
+using SimpleCode.Migrator.Cli.TokenRelated;
+
+namespace SimpleCode.Migrator.Cli.Commands
 {
     public class SetVerbose : ICommand
     {

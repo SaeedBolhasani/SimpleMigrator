@@ -1,6 +1,8 @@
 ﻿using System;
+using SimpleCode.Migrator.Cli.Interfaces;
+using SimpleCode.Migrator.Cli.TokenRelated;
 
-namespace SimpleMigrator.Migration
+namespace SimpleCode.Migrator.Cli.Commands
 {
     public class SetConnectionString : ICommand
     {

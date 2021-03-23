@@ -1,9 +1,9 @@
-﻿using Dapper;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
+using Dapper;
 
-namespace SimpleMigrator.DbMigratorEngine.Commands.Validators
+namespace SimpleCode.Migrator.Commands.Validators
 {
     public class CheckRowExistanceCommand : ValidationCommand
     {

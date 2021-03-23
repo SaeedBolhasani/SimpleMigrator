@@ -1,4 +1,6 @@
-﻿namespace SimpleMigrator.Migration
+﻿using SimpleCode.Migrator.Cli.TokenRelated;
+
+namespace SimpleCode.Migrator.Cli.Interfaces
 {
     public interface ICommand
     {

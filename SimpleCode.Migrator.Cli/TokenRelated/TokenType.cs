@@ -1,4 +1,4 @@
-﻿namespace SimpleMigrator.Migration
+﻿namespace SimpleCode.Migrator.Cli.TokenRelated
 {
     public enum TokenType
     {

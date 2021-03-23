@@ -1,9 +1,9 @@
-﻿using SimpleMigrator.DbMigratorEngine.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 using System.Text;
+using SimpleCode.Migrator.Models;
 
-namespace SimpleMigrator.DbMigratorEngine.Migrators
+namespace SimpleCode.Migrator.Migrators
 {
     public class CreateColumnCollection
     {
@@ -40,7 +40,7 @@ namespace SimpleMigrator.DbMigratorEngine.Migrators
                 stringBuilder.AppendFormat("DEFAULT (({0})) ", defaultValue);
 
             if (identity != null)
-                stringBuilder.AppendFormat($"IDENTITY({identity.Seed},{identity.Increament}) ");
+                stringBuilder.AppendFormat($"IDENTITY({identity.Seed},{identity.Increment}) ");
 
             return stringBuilder.ToString();
         }

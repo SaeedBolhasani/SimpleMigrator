@@ -1,9 +1,8 @@
-﻿using SimpleMigrator.DbMigratorEngine.Models;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text;
+using SimpleCode.Migrator.Models;
 
-namespace SimpleMigrator.DbMigratorEngine.Commands
+namespace SimpleCode.Migrator.Commands
 {
     public class AddColumnCommand : CommandBase
     {
@@ -13,7 +12,7 @@ namespace SimpleMigrator.DbMigratorEngine.Commands
         private readonly string type;
         private readonly bool allowNull;
         private readonly string constraint;
-        private readonly object defalutValue;
+        private readonly object defaultValue;
         private readonly Identity identity;
 
         public List<ValidationCommand> ValidationCommands { get; } = new List<ValidationCommand>();
@@ -24,7 +23,7 @@ namespace SimpleMigrator.DbMigratorEngine.Commands
             string type,
             bool allowNull,
             string constraint,
-            object defalutValue,
+            object defaultValue,
             Identity identity)
         {
             this.schema = schema;
@@ -33,7 +32,7 @@ namespace SimpleMigrator.DbMigratorEngine.Commands
             this.type = type;
             this.allowNull = allowNull;
             this.constraint = constraint;
-            this.defalutValue = defalutValue;
+            this.defaultValue = defaultValue;
             this.identity = identity;
         }
         public override void Execute(ExecutionContext executionContext)
@@ -51,11 +50,11 @@ namespace SimpleMigrator.DbMigratorEngine.Commands
             if (constraint != null)
                 stringBuilder.AppendFormat("CONSTRAINT [{0}] ", constraint);
 
-            if (defalutValue != null)
-                stringBuilder.AppendFormat("DEFAULT (({0})) ", defalutValue);
+            if (defaultValue != null)
+                stringBuilder.AppendFormat("DEFAULT (({0})) ", defaultValue);
 
             if (identity != null)
-                stringBuilder.Append($"IDENTITY({identity.Seed},{identity.Increament}) ");
+                stringBuilder.Append($"IDENTITY({identity.Seed},{identity.Increment}) ");
 
             var sql = stringBuilder.ToString();
             executionContext.Execute(sql);

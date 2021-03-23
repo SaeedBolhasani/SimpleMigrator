@@ -1,8 +1,7 @@
-﻿using SimpleMigrator.DbMigratorEngine.Models;
-using System;
-using System.Data;
+﻿using System.Data;
+using SimpleCode.Migrator.Models;
 
-namespace SimpleMigrator.DbMigratorEngine.Migrators
+namespace SimpleCode.Migrator.Migrators
 {
     public class AlterColumnCollection : Alter
     {
@@ -45,5 +44,7 @@ namespace SimpleMigrator.DbMigratorEngine.Migrators
             base.DropConstraintIfNotExists(constraint);
             return this;
         }
+
+        public AlterColumnCollection ModifyColumn(string columnName, SqlDbType type, bool allowNull = true, object defaultValue = null, string constraint = null, Identity identity = null)
     }
 }

@@ -1,8 +1,8 @@
-﻿using SimpleMigrator.DbMigratorEngine.Commands;
-using SimpleMigrator.DbMigratorEngine.Commands.Validators;
-using System;
+﻿using System;
+using SimpleCode.Migrator.Commands;
+using SimpleCode.Migrator.Commands.Validators;
 
-namespace SimpleMigrator.DbMigratorEngine.Migrators
+namespace SimpleCode.Migrator.Migrators
 {
     public class Insert
     {

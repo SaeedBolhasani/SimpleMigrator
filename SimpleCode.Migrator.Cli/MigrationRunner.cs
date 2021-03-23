@@ -1,14 +1,13 @@
-﻿using Dapper;
-using SimpleMigrator.DbMigratorEngine;
-using SimpleMigrator.DbMigratorEngine.Commands;
-using SimpleMigrator.DbMigratorEngine.Migrations;
-using SimpleMigrator.DbMigratorEngine.Migrators;
-using System;
+﻿using System;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
+using Dapper;
+using SimpleCode.Migrator.Commands;
+using SimpleCode.Migrator.Migrations;
+using SimpleCode.Migrator.Migrators;
 
-namespace SimpleMigrator.Migration
+namespace SimpleCode.Migrator.Cli
 {
     public class MigrationRunner
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SimpleMigrator.DbMigratorEngine
+namespace SimpleCode.Migrator
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
     public class MigrationMetadataAttribute : Attribute

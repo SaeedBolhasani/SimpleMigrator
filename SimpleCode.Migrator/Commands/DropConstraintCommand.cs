@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Dynamic;
-using System.Linq;
 
-namespace SimpleMigrator.DbMigratorEngine.Commands
+namespace SimpleCode.Migrator.Commands
 {
     public class DropConstraintCommand : CommandBase
     {

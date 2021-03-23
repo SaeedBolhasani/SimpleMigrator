@@ -1,13 +1,13 @@
 ﻿using McMaster.NETCore.Plugins;
-using SimpleMigrator.DbMigratorEngine;
-using SimpleMigrator.DbMigratorEngine.Migrators;
-using SimpleMigrator.Migration;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
+using SimpleCode.Migrator.Cli.Interfaces;
+using SimpleCode.Migrator.Cli.TokenRelated;
+using SimpleCode.Migrator.Migrators;
 
 namespace SimpleCode.Migrator.Cli
 {

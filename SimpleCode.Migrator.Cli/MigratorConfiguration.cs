@@ -1,4 +1,4 @@
-﻿namespace SimpleMigrator.Migration
+﻿namespace SimpleCode.Migrator.Cli
 {
     public class MigratorConfiguration
     {

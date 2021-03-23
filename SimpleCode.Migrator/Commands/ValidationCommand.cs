@@ -1,4 +1,4 @@
-﻿namespace SimpleMigrator.DbMigratorEngine.Commands
+﻿namespace SimpleCode.Migrator.Commands
 {
     public abstract class ValidationCommand
     {

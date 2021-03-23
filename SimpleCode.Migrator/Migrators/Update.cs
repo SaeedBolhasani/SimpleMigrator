@@ -1,6 +1,6 @@
-﻿using SimpleMigrator.DbMigratorEngine.Commands;
+﻿using SimpleCode.Migrator.Commands;
 
-namespace SimpleMigrator.DbMigratorEngine.Migrators
+namespace SimpleCode.Migrator.Migrators
 {
     public class Update
     {

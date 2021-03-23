@@ -1,6 +1,6 @@
 ﻿using Dapper;
 
-namespace SimpleMigrator.DbMigratorEngine.Commands.Validators
+namespace SimpleCode.Migrator.Commands.Validators
 {
     public class CheckTableExistanceCommand : ValidationCommand
     {

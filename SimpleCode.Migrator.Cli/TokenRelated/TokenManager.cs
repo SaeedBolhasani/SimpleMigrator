@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SimpleMigrator.Migration
+namespace SimpleCode.Migrator.Cli.TokenRelated
 {
     public class TokenManager
     {

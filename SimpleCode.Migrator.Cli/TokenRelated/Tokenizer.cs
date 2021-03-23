@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SimpleMigrator.Migration
+namespace SimpleCode.Migrator.Cli.TokenRelated
 {
     public class Tokenizer
     {

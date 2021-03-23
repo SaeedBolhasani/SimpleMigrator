@@ -1,13 +1,8 @@
-﻿using SimpleMigrator.DbMigratorEngine.Migrators;
-using SimpleMigrator.DbMigratorEngine.Models;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data;
+using SimpleCode.Migrator.Migrators;
+using SimpleCode.Migrator.Models;
 
-namespace SimpleMigrator.DbMigratorEngine.Migrations
+namespace SimpleCode.Migrator.Migrations
 {
     public class Initial : DbMigratorBase
     {

@@ -1,8 +1,7 @@
-﻿using SimpleMigrator.DbMigratorEngine.Commands;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
+using SimpleCode.Migrator.Commands;
 
-namespace SimpleMigrator.DbMigratorEngine.Migrators
+namespace SimpleCode.Migrator.Migrators
 {
     public abstract class DbMigratorBase
     {

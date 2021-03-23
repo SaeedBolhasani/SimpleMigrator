@@ -2,7 +2,7 @@
 using System.Dynamic;
 using System.Linq;
 
-namespace SimpleMigrator.DbMigratorEngine.Commands
+namespace SimpleCode.Migrator.Commands
 {
     public class InsertCommand : CommandBase
     {

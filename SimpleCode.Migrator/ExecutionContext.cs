@@ -1,11 +1,11 @@
-﻿using Dapper;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Dynamic;
+using Dapper;
 
-namespace SimpleMigrator.DbMigratorEngine
+namespace SimpleCode.Migrator
 {
     public class ExecutionContext
     {

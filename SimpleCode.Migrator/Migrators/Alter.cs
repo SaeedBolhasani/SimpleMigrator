@@ -1,10 +1,9 @@
-﻿using SimpleMigrator.DbMigratorEngine.Commands;
-using SimpleMigrator.DbMigratorEngine.Commands.Validators;
-using SimpleMigrator.DbMigratorEngine.Models;
-using System;
-using System.Data;
+﻿using System.Data;
+using SimpleCode.Migrator.Commands;
+using SimpleCode.Migrator.Commands.Validators;
+using SimpleCode.Migrator.Models;
 
-namespace SimpleMigrator.DbMigratorEngine.Migrators
+namespace SimpleCode.Migrator.Migrators
 {
     public class Alter
     {
@@ -69,5 +68,6 @@ namespace SimpleMigrator.DbMigratorEngine.Migrators
             return table;
         }
 
+        public Table ModifyColumn()
     }
 }

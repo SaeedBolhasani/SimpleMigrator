@@ -1,8 +1,8 @@
-﻿using SimpleMigrator.DbMigratorEngine.Commands;
-using SimpleMigrator.DbMigratorEngine.Commands.Validators;
-using System;
+﻿using System;
+using SimpleCode.Migrator.Commands;
+using SimpleCode.Migrator.Commands.Validators;
 
-namespace SimpleMigrator.DbMigratorEngine.Migrators
+namespace SimpleCode.Migrator.Migrators
 {
     public class Table
     {
@@ -62,10 +62,7 @@ namespace SimpleMigrator.DbMigratorEngine.Migrators
             dbMigrator.Commands.Add(command);
         }
     }
-}
 
-namespace SimpleMigrator.DbMigratorEngine
-{
     class Create
     {
     }

@@ -1,14 +1,14 @@
-﻿namespace SimpleMigrator.DbMigratorEngine.Models
+﻿namespace SimpleCode.Migrator.Models
 {
     public class Identity
     {
-        public Identity(int seed, int increament)
+        public Identity(int seed, int increment)
         {
             Seed = seed;
-            Increament = increament;
+            Increment = increment;
         }
         public int Seed { get; }
-        public int Increament { get; }
+        public int Increment { get; }
 
     }
 }
