@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace SimpleMigrator.DbMigratorEngine.Commands
 {
-    public class InsertCommand : CommandBase
+    public class InsertCommand : ISqlCommand
     {
         private readonly string schema;
         private readonly string table;
@@ -12,6 +12,7 @@ namespace SimpleMigrator.DbMigratorEngine.Commands
         private readonly object[] values;
 
         public List<ValidationCommand> ValidationCommands { get; } = new List<ValidationCommand>();
+        public IDictionary<string, object> CommandSetions { get; }
 
         public InsertCommand(string schema, string table, string[] columns, object[] values)
         {
@@ -20,7 +21,7 @@ namespace SimpleMigrator.DbMigratorEngine.Commands
             this.columns = columns;
             this.values = values;
         }
-        public override void Execute(ExecutionContext executionContext)
+        public void Execute(ExecutionContext executionContext)
         {
             foreach (var command in ValidationCommands)
                 if (!command.Validate(executionContext))

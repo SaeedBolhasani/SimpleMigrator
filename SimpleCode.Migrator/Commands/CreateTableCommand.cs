@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace SimpleMigrator.DbMigratorEngine.Commands
 {
-    public class CreateTableCommand:CommandBase
+    public class CreateTableCommand:ISqlCommand
     {
         private readonly string schema;
         private readonly string table;
         private readonly List<string> columns;
         public List<ValidationCommand> ValidationCommands { get; } = new List<ValidationCommand>();
+        public IDictionary<string, object> CommandSetions { get; }
 
         public CreateTableCommand(string schema, string table, List<string> columns)
         {
@@ -19,7 +20,7 @@ namespace SimpleMigrator.DbMigratorEngine.Commands
             this.table = table;
             this.columns = columns;
         }
-        public override void Execute(ExecutionContext connection)
+        public void Execute(ExecutionContext connection)
         {
             foreach (var command in ValidationCommands)
                 if (!command.Validate(connection))

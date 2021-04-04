@@ -1,6 +1,8 @@
-﻿namespace SimpleMigrator.DbMigratorEngine.Commands
+﻿using System.Collections.Generic;
+
+namespace SimpleMigrator.DbMigratorEngine.Commands
 {
-    public class RawSqlCommand : CommandBase
+    public class RawSqlCommand : ISqlCommand
     {
         private readonly string rawSql;
         private readonly object values;
@@ -10,7 +12,10 @@
             this.rawSql = rawSql;
             this.values = values;
         }
-        public override void Execute(ExecutionContext connection)
+
+        public IDictionary<string, object> CommandSetions { get; }
+
+        public void Execute(ExecutionContext connection)
         {
             connection.Execute(rawSql, values);
         }

@@ -4,13 +4,14 @@ using System.Linq;
 
 namespace SimpleMigrator.DbMigratorEngine.Commands
 {
-    public class DropConstraintCommand : CommandBase
+    public class DropConstraintCommand : ISqlCommand
     {
         private readonly string schema;
         private readonly string table;
         private readonly string constraint;
 
         public List<ValidationCommand> ValidationCommands { get; } = new List<ValidationCommand>();
+        public IDictionary<string, object> CommandSetions { get; }
 
         public DropConstraintCommand(string schema, string table, string constraint)
         {
@@ -18,7 +19,7 @@ namespace SimpleMigrator.DbMigratorEngine.Commands
             this.table = table;
             this.constraint = constraint;
         }
-        public override void Execute(ExecutionContext executionContext)
+        public void Execute(ExecutionContext executionContext)
         {
             foreach (var command in ValidationCommands)
                 if (command.Validate(executionContext))

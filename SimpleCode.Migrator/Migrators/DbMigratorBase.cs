@@ -6,12 +6,14 @@ namespace SimpleMigrator.DbMigratorEngine.Migrators
 {
     public abstract class DbMigratorBase
     {
-        public List<CommandBase> Commands { get; } = new List<CommandBase>();
+        public List<ISqlCommand> Commands { get; } = new List<ISqlCommand>();
 
-        public Table Table(string name)
-        {
-            return new Table(this, name);
-        }
+        //public Table Table(string name)
+        //{
+        //    return new Table(this, name);
+        //}
+
+
 
         public void ExecuteRawSql(string sql, object parameters)
         {

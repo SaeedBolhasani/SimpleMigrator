@@ -40,16 +40,16 @@ namespace SimpleMigrator.Migration
                 exec.Transaction = transaction;
                 try
                 {
-                    CheckMigrationHistoryTable(exec);
-                    var lastHistory = GetLatestMigrationHistory(exec);
-                    var lastMigration = migrators.Last().GetType().GetCustomAttribute<MigrationMetadataAttribute>();
-                    if (lastHistory != null && lastHistory.Version.CompareTo(lastMigration.SimpleMigratorVersion) > -1)
-                    {
-                        Console.WriteLine("Your database is already update.");
-                        connection.Dispose();
-                        transaction.Dispose();
-                        return;
-                    }
+                    //CheckMigrationHistoryTable(exec);
+                    //var lastHistory = GetLatestMigrationHistory(exec);
+                    //var lastMigration = migrators.Last().GetType().GetCustomAttribute<MigrationMetadataAttribute>();
+                    //if (lastHistory != null && lastHistory.Version.CompareTo(lastMigration.SimpleMigratorVersion) > -1)
+                    //{
+                    //    Console.WriteLine("Your database is already update.");
+                    //    connection.Dispose();
+                    //    transaction.Dispose();
+                    //    return;
+                    //}
 
                     foreach (var migrator in migrators)
                     {

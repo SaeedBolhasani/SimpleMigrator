@@ -1,64 +1,38 @@
 ﻿using SimpleMigrator.DbMigratorEngine.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SimpleMigrator.DbMigratorEngine.Commands
 {
-    public class AddColumnCommand : CommandBase
+    public class AddColumnCommand : ISqlCommand
     {
-        private readonly string schema;
-        private readonly string table;
-        private readonly string column;
-        private readonly string type;
-        private readonly bool allowNull;
-        private readonly string constraint;
-        private readonly object defalutValue;
-        private readonly Identity identity;
-
         public List<ValidationCommand> ValidationCommands { get; } = new List<ValidationCommand>();
+        public IDictionary<string, object> CommandSetions { get; } = new KeyInsensitiveDictionray<object>();
 
-        public AddColumnCommand(string schema,
-            string table,
-            string column,
-            string type,
-            bool allowNull,
-            string constraint,
-            object defalutValue,
-            Identity identity)
-        {
-            this.schema = schema;
-            this.table = table;
-            this.column = column;
-            this.type = type;
-            this.allowNull = allowNull;
-            this.constraint = constraint;
-            this.defalutValue = defalutValue;
-            this.identity = identity;
-        }
-        public override void Execute(ExecutionContext executionContext)
+        public void Execute(ExecutionContext executionContext)
         {
             foreach (var command in ValidationCommands)
                 if (!command.Validate(executionContext))
                     return;
-            var stringBuilder = new StringBuilder();
 
-            stringBuilder.AppendFormat("alter table [{0}].[{1}] add[{2}] {3} ",
-                schema, table, column, type);
-
-            stringBuilder.Append(allowNull ? "Null " : "Not Null ");
-
-            if (constraint != null)
-                stringBuilder.AppendFormat("CONSTRAINT [{0}] ", constraint);
-
-            if (defalutValue != null)
-                stringBuilder.AppendFormat("DEFAULT (({0})) ", defalutValue);
-
-            if (identity != null)
-                stringBuilder.Append($"IDENTITY({identity.Seed},{identity.Increament}) ");
-
-            var sql = stringBuilder.ToString();
+            var sql = string.Join(' ', CommandSetions.Select(i => i.Value.ToString().Trim()));
             executionContext.Execute(sql);
         }
+    }
+
+    public class KeyInsensitiveDictionray<T>:Dictionary<string,T>,IDictionary<string,T>
+    {
+        public new void Add(string key,T value)
+        {
+            base.Add(key.ToLower(), value);
+        }
+        public new T this[string key]
+        {
+            get => base[key.ToLower()];
+            set => base[key.ToLower()] = value;
+        }
+
     }
 }

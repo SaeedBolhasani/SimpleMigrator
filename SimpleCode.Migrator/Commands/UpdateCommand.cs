@@ -1,6 +1,8 @@
-﻿namespace SimpleMigrator.DbMigratorEngine.Commands
+﻿using System.Collections.Generic;
+
+namespace SimpleMigrator.DbMigratorEngine.Commands
 {
-    public class UpdateCommand : CommandBase
+    public class UpdateCommand : ISqlCommand
     {
         private readonly string schema;
         private readonly string table;
@@ -16,7 +18,10 @@
             this.value = value;
             this.condition = condition;
         }
-        public override void Execute(ExecutionContext connection)
+
+        public IDictionary<string, object> CommandSetions { get; }
+
+        public void Execute(ExecutionContext connection)
         {
             string rawSql = $"update [{schema}].[{table}] set [{column}] = {value} where {condition}";
             connection.Execute(rawSql);
