@@ -7,10 +7,9 @@ namespace SimpleMigrator.DbMigratorEngine.Migrators
     {
         public ISqlCommand SqlCommand { get; }
 
-        public ColumnFluent(ITable table)
+        public ColumnFluent(ITable table ,ISqlCommand sqlCommand)
         {
-            this.SqlCommand = new AddColumnCommand();
-            SqlCommand.CommandSetions.Add("main",$"Alter Table [{table.Schema.Name}].[{table.Name}] Add");
+            this.SqlCommand = sqlCommand;
         }
 
         public IColumnType Name(string name)
@@ -33,26 +32,19 @@ namespace SimpleMigrator.DbMigratorEngine.Migrators
 
         public IColumnOption Constraint(string constraint)
         {
-            //this.constraint = constraint;
+            SqlCommand.CommandSetions.Add("constraint", $"Constraint {constraint}");
             return this;
         }
 
         public IColumnOption Null()
         {
-            //this.allowNull = true;
+            SqlCommand.CommandSetions.Add("allowNull", $"Null");
             return this;
         }
         public IColumnOption NotNull()
         {
-            //this.allowNull = false;
+            SqlCommand.CommandSetions.Add("allowNull", $"Not Null");
             return this;
-        }
-
-        internal AddColumnCommand Build(Table table)
-        {
-
-            //return new AddColumnCommand(this.name);
-            return null;
         }
     }
 }

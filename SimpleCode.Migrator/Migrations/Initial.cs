@@ -1,11 +1,4 @@
 ﻿using SimpleMigrator.DbMigratorEngine.Migrators;
-using SimpleMigrator.DbMigratorEngine.Models;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SimpleMigrator.DbMigratorEngine.Migrations
 {

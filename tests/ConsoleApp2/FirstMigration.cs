@@ -1,4 +1,5 @@
 ﻿using SimpleCode.Migrator.Migrators.Extensions;
+using SimpleCode.Migrator.SqlServer;
 using SimpleMigrator.DbMigratorEngine;
 using SimpleMigrator.DbMigratorEngine.Migrators;
 using System;
@@ -14,8 +15,9 @@ namespace ConsoleApp2
         {
 
             this.Schema("dbo")
-                .Table("Test")
-                .Alter().AddColumn(i => i.Name("Column1").Type("T1").NotNull());//.IfNotExist();
+                .Table("mytest")
+                .Alter().AddColumn(i => i.Name("Column3").Type("numeric").NotNull())
+                        .ModifyColumn(i => i.Name("Column2").Type("nvarchar(10)").NotNull());//.IfNotExist();
 
         }
     }
